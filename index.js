@@ -21,6 +21,16 @@ const client = new MongoClient(uri, {
 
 const taskFile = client.db('taskFile').collection('taskCollection');
 
+app.get('/task', async (req, res) => {
+          try {
+            const meals = await taskFile.find().toArray();
+            res.send(meals);
+          } catch (error) {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+          }
+        });
+
 app.post('/task', async (req, res) => {
           try {
             const product = req.body;
